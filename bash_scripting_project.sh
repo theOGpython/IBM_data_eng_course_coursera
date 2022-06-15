@@ -57,14 +57,12 @@ do
   # [TASK 10]
   if ((`date -r $file +%s` > $yesterdayTS))
   then toBackup+=($file)
-    # [TASK 11]
+    # []
   fi
 done
 
-# [TASK 12]
+# [archive the backup file]
 tar -czvf $backupFileName ${toBackup[*]}
 
-# [TASK 13]
+# [Move the backup file to the backup directory]
 mv $backupFileName $destDirAbsPath
-
-# Congratulations! You completed the final project for this course!
