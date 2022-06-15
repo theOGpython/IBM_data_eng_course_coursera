@@ -1,3 +1,4 @@
+#! /bin/bash
 # This checks if the number of arguments is correct
 # If the number of arguments is incorrect ( $# != 2) print error message and exit
 if [[ $# != 2 ]]
@@ -22,7 +23,7 @@ echo "\$targetDirectory"
 echo "\$destinationDirectory"
 
 # [TASK 3]
-currentTS=`$(date +%s)`
+currentTS=$(date +%s)
 
 # [TASK 4]
 backupFileName="backup-[$currentTS].tar.gz"
@@ -35,11 +36,11 @@ backupFileName="backup-[$currentTS].tar.gz"
 # To make things easier, we will define some useful variables...
 
 # [TASK 5]
-origAbsPath=`$(pwd)`
+origAbsPath=$(pwd)
 
 # [TASK 6]
 cd $destinationDirectory # <-
-destDirAbsPath=`$(pwd)`
+destDirAbsPath=$(pwd)
 
 # [TASK 7]
 cd $destDirAbsPath # <-
@@ -51,17 +52,19 @@ yesterdayTS=$(($currentTS - 24 * 60 * 60))
 #declare an indexed array
 declare -a toBackup
 
-for file in $(ls -la) # [TASK 9]
+for file in $(ls -l) # [TASK 9]
 do
   # [TASK 10]
-  if (())
-  then
+  if ((`date -r $file +%s` > $yesterdayTS))
+  then toBackup+=($file)
     # [TASK 11]
   fi
 done
 
 # [TASK 12]
+tar -czvf $backupFileName ${toBackup[*]}
 
 # [TASK 13]
+mv $backupFileName $destDirAbsPath
 
 # Congratulations! You completed the final project for this course!
