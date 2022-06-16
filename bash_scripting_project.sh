@@ -14,18 +14,18 @@ then
   exit
 fi
 
-# [TASK 1]
+# Assign the arguements to variables
 targetDirectory=$1
 destinationDirectory=$2
 
-# [TASK 2]
+# Print the directories
 echo "\$targetDirectory"
 echo "\$destinationDirectory"
 
-# [TASK 3]
+# Assign the current date (in seconds) to a variable
 currentTS=$(date +%s)
 
-# [TASK 4]
+# set the archived backup file name
 backupFileName="backup-[$currentTS].tar.gz"
 
 # We're going to:
@@ -35,18 +35,18 @@ backupFileName="backup-[$currentTS].tar.gz"
 
 # To make things easier, we will define some useful variables...
 
-# [TASK 5]
+# assign originating dir to a variable
 origAbsPath=$(pwd)
 
-# [TASK 6]
+# cd into destination dir and assign to a variable
 cd $destinationDirectory # <-
 destDirAbsPath=$(pwd)
 
-# [TASK 7]
+# view destination and target directories
 cd $destDirAbsPath # <-
 cd $targetDirectory # <-
 
-# [TASK 8]
+# compute and assign yesterdays date (in seconds)
 yesterdayTS=$(($currentTS - 24 * 60 * 60))
 
 #declare an indexed array
@@ -54,15 +54,15 @@ declare -a toBackup
 
 for file in $(ls -l) # [TASK 9]
 do
-  # [TASK 10]
+  # set conditions for backup
   if ((`date -r $file +%s` > $yesterdayTS))
   then toBackup+=($file)
-    # []
+    # execute backup
   fi
 done
 
-# [archive the backup file]
+# archive the backup file
 tar -czvf $backupFileName ${toBackup[*]}
 
-# [Move the backup file to the backup directory]
+# Move the backup file to the backup directory
 mv $backupFileName $destDirAbsPath
